@@ -12,11 +12,13 @@
     <artifactId>yukx_config</artifactId>
 
     <dependencies>
+        <!-- spring cloud config 服务端包 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
 
+        <!-- eureka 客户端 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
