@@ -33,7 +33,6 @@
         <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
         <springfox-bean-validators.version>2.9.2</springfox-bean-validators.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
-        <starter-redis.version>2.2.1.RELEASE</starter-redis.version>
     </properties>
 
     <dependencyManagement>
@@ -50,12 +49,6 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-redis</artifactId>
-                <version>${starter-redis.version}</version>
             </dependency>
 
             <dependency>
