@@ -9,4 +9,18 @@ spring:
       name: service-${spring.profiles.active} # 指定git 文件名
       label: master # 指定分支
       profile: dev  # 指定环境
-
+  datasource:
+    name: dev
+    url: jdbc:mysql://localhost:3306/docker?nullCatalogMeansCurrent=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false
+    username: root
+    password: yukx
+    driver-class-name: com.mysql.cj.jdbc.Driver
+logging:
+  level:
+    com:
+      looedu:
+        mapper: debug
+# 设置 mybatis 配置文件路径
+mybatis:
+  type-aliases-package: yukx.security.service.dao.entity
+  mapper-locations: classpath:mappers/*.xml

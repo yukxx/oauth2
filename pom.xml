@@ -33,6 +33,7 @@
         <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
         <springfox-bean-validators.version>2.9.2</springfox-bean-validators.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
+        <mybatis-spring-boot-starter.version>2.0.0</mybatis-spring-boot-starter.version>
     </properties>
 
     <dependencyManagement>
@@ -82,11 +83,24 @@
                 <version>${springfox-bean-validators.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus -->
+            <!-- mybatis-plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
+            <!--<dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.4.0</version>
+            </dependency>-->
+
+            <!-- mybatis -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -123,5 +137,49 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
+        <!-- 定义插件   但不加载 -->
+        <pluginManagement>
+            <plugins>
+                <!-- mybatis 代码映射生成插件 -->
+                <plugin>
+                    <groupId>org.mybatis.generator</groupId>
+                    <artifactId>mybatis-generator-maven-plugin</artifactId>
+                    <version>1.3.2</version>
+                    <executions>
+                        <execution>
+                            <id>Generate MyBatis Artifacts</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!-- generator 工具配置文件的位置 -->
+                        <configurationFile>src/main/resources/mybatisConfig/generatorConfig.xml</configurationFile>
+                        <verbose>true</verbose>
+                        <overwrite>true</overwrite>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                            <version>${mysql-connector.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.baomidou</groupId>
+                            <artifactId>mybatis-plus</artifactId>
+                            <version>${mybatis-plus.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.mybatis.generator</groupId>
+                            <artifactId>mybatis-generator-core</artifactId>
+                            <version>1.3.2</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

@@ -25,6 +25,12 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
+        <!-- get,set -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
         <!-- spring cloud config 客户端包 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -42,16 +48,22 @@
         </dependency>
 
         <!-- mybatis plus -->
-        <!--<dependency>
+        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus</artifactId>
-        </dependency>-->
+        </dependency>
 
-        <!-- mysql -->
-        <!--<dependency>
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+
+         <!-- mysql -->
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!-- 自己的公用包 -->
         <dependency>
@@ -74,4 +86,16 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+    <!-- 使用父pom 定义好的 插件 -->
+    <build>
+        <plugins>
+
+            <!-- mybatis 数据库映射自动生成插件 -->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
