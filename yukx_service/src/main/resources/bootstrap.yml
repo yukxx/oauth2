@@ -9,15 +9,10 @@ spring:
       name: service-${spring.profiles.active} # 指定git 文件名
       label: master # 指定分支
       profile: dev  # 指定环境
-  datasource:
-    name: dev
-    url: jdbc:mysql://localhost:3306/docker?nullCatalogMeansCurrent=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false
-    username: root
-    password: yukx
-    driver-class-name: com.mysql.cj.jdbc.Driver
 # 设置 mybatis plus 配置文件路径
 mybatis-plus:
   mapper-locations: classpath*:/mappers/*Mapper.xml
-logging:
-  level:
-    com.baomidou.mybatisplus.samples.quickstart: debug
+  #mybatis-plus配置控制台打印完整带参数SQL语句
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
