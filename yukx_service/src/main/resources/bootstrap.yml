@@ -15,12 +15,9 @@ spring:
     username: root
     password: yukx
     driver-class-name: com.mysql.cj.jdbc.Driver
+# 设置 mybatis plus 配置文件路径
+mybatis-plus:
+  mapper-locations: classpath*:/mappers/*Mapper.xml
 logging:
   level:
-    com:
-      looedu:
-        mapper: debug
-# 设置 mybatis 配置文件路径
-mybatis:
-  type-aliases-package: yukx.security.service.dao.entity
-  mapper-locations: classpath:mappers/*.xml
+    com.baomidou.mybatisplus.samples.quickstart: debug

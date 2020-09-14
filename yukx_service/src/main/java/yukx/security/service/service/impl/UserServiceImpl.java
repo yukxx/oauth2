@@ -22,7 +22,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> queryAll() {
-        List<User> userList = userMapper.selectAll();
+//        List<User> userList = userMapper.selectList(null);
+        List<User> userList = userMapper.selectByMy();
         return userList;
+    }
+
+    public static void main(String[] args) {
+        String projectPath = System.getProperty("user.dir");
+        System.out.println(projectPath);
     }
 }

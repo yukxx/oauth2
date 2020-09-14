@@ -32,7 +32,7 @@
         <fastjson.version>1.2.73</fastjson.version>
         <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
         <springfox-bean-validators.version>2.9.2</springfox-bean-validators.version>
-        <mybatis-plus.version>3.3.2</mybatis-plus.version>
+        <mybatis-plus.version>3.4.0</mybatis-plus.version>
         <mybatis-spring-boot-starter.version>2.0.0</mybatis-spring-boot-starter.version>
     </properties>
 
@@ -86,17 +86,25 @@
             <!-- mybatis-plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus</artifactId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
-            <!--<dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.4.0</version>
-            </dependency>-->
 
-            <!-- mybatis -->
+            <!--- mybatis-plus 代码生成器 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- mybatis-plus 代码生成器模板引擎（Velocity默认) -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>2.2</version>
+            </dependency>
+
+            <!-- mybatis (使用 mybatis-plus 就没必要添加这个包) -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -166,11 +174,6 @@
                             <groupId>mysql</groupId>
                             <artifactId>mysql-connector-java</artifactId>
                             <version>${mysql-connector.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.baomidou</groupId>
-                            <artifactId>mybatis-plus</artifactId>
-                            <version>${mybatis-plus.version}</version>
                         </dependency>
                         <dependency>
                             <groupId>org.mybatis.generator</groupId>

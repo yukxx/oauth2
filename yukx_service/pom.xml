@@ -19,6 +19,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- springboot 测试组件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
         <!-- eureka 客户端 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -50,16 +56,28 @@
         <!-- mybatis plus -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
-        <!-- mybatis -->
+        <!-- mybatis plus 代码生成器 -->
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
         </dependency>
 
-         <!-- mysql -->
+        <!-- mybatis plus代码生成需要用的包 -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
+        <!-- mybatis-plus 代码生成器模板引擎（Velocity默认) -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+        </dependency>
+
+        <!-- mysql -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
