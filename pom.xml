@@ -83,6 +83,12 @@
                 <version>${springfox-bean-validators.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-oauth2</artifactId>
+                <version>2.1.2.RELEASE</version>
+            </dependency>
+
             <!-- mybatis-plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -149,7 +155,7 @@
         <!-- 定义插件   但不加载 -->
         <pluginManagement>
             <plugins>
-                <!-- mybatis 代码映射生成插件 -->
+                <!-- mybatis 代码映射生成插件  mybatis-plus不需要使用这个插件 -->
                 <plugin>
                     <groupId>org.mybatis.generator</groupId>
                     <artifactId>mybatis-generator-maven-plugin</artifactId>

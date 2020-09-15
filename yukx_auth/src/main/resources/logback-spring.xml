@@ -15,7 +15,7 @@
 
     <!--定义一个将日志输出到文件的appender，名称为FILE_LOG -->
     <appender name="FILE_LOG" class="ch.qos.logback.core.FileAppender">
-        <file>/Users/yukx/Documents/workspace/oauth/log/service.log</file>
+        <file>/Users/yukx/Documents/workspace/oauth/log/auth.log</file>
         <append>true</append>
         <encoder>
             <pattern>[Eran]%date [%thread %line] %level >> %msg >> %logger{10}%n</pattern>
@@ -25,7 +25,7 @@
     <!-- 按时间和文件大小滚动产生日志文件 -->
     <appender name="ROL-SIZE-FILE-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>/Users/yukx/Documents/workspace/oauth/log/service/yukx.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>/Users/yukx/Documents/workspace/oauth/log/auth/yukx.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- 单个文件的最大内存 -->
             <maxFileSize>100MB</maxFileSize>
             <!-- 只保留近七天的日志 -->
