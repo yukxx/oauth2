@@ -1,5 +1,6 @@
 package yukx.security.auth.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,9 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private UserDetailsService userDetailsService;
     /*@Override
     protected UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -30,7 +34,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return manager;
     }*/
 
+    /**
+     * 现实{@link UserDetailsService} 接口，从数据库读取用户信息
+     *
+     * @param auth
+     * @throws Exception
+     */
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
+    }
+
+    /**
+     * 基于内存方式读取用户信息
+     *
+     * @throws Exception
+     */
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
                 .withUser("user_1")
@@ -40,14 +61,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .withUser("user_2")
                 .password(new BCryptPasswordEncoder().encode("123456"))
                 .authorities("USER");
-    }
-
+    }*/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.requestMatchers().anyRequest()
+        /*http.requestMatchers().anyRequest()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/oauth/*").permitAll();
+                .antMatchers("/oauth/*").permitAll();*/
+        http    // 配置登陆页并允许访问
+                .formLogin().permitAll()
+                .and().authorizeRequests().antMatchers("/oauth/**", "/resources/**").permitAll()
+                // 其余所有请求全部需要认证
+                .anyRequest().authenticated()
+                // 关闭跨域保护
+                .and().csrf().disable();
     }
 
 

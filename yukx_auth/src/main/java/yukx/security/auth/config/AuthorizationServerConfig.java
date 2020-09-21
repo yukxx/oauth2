@@ -3,6 +3,7 @@ package yukx.security.auth.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -30,6 +31,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     RedisConnectionFactory redisConnectionFactory;
+
     /**
      * 配置AuthorizationServer安全认证的相关信息，创建ClientCredentialsTokenEndpointFilter核心过滤器
      *
@@ -54,14 +56,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("select")
                 .authorities("client")
-                .secret("{bcrypt}"+new BCryptPasswordEncoder().encode(OauthClientEnum.CLIENT1.secret))
+                .secret("{bcrypt}" + new BCryptPasswordEncoder().encode(OauthClientEnum.CLIENT1.secret))
                 .and()
                 .withClient(OauthClientEnum.CLIENT2.clientId)
                 .resourceIds(OauthResourceEnum.RESOURCE1.resource)
                 .authorizedGrantTypes("password", "refresh_token")
                 .scopes("server")
                 .authorities("client")
-                .secret("{bcrypt}"+new BCryptPasswordEncoder().encode(OauthClientEnum.CLIENT1.secret));
+                .secret("{bcrypt}" + new BCryptPasswordEncoder().encode(OauthClientEnum.CLIENT1.secret));
     }
 
     /**
@@ -73,6 +75,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.tokenStore(new RedisTokenStore(redisConnectionFactory))
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authenticationManager)
+                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
     }
 }

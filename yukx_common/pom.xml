@@ -11,4 +11,7 @@
     <packaging>jar</packaging>
     <artifactId>yukx_common</artifactId>
 
+    <dependencies>
+
+    </dependencies>
 </project>
