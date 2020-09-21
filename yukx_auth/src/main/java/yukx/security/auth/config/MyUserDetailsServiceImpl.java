@@ -35,7 +35,7 @@ public class MyUserDetailsServiceImpl implements UserDetailsService {
         AUser user = aUserMapper.selectOne(wrapper);
         if (user == null)
             throw new UsernameNotFoundException("登陆用户[" + username + "]不存在");
-        return new User(user.getLoginName(), user.getPassword(), getAuthority());
+        return new User(user.getLoginName(), user.getPassword(), Arrays.asList(new SimpleGrantedAuthority(user.getRoleName())));
     }
 
     private List getAuthority() {

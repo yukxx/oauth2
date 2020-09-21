@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
@@ -64,19 +65,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }*/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        /*http.requestMatchers().anyRequest()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/oauth/*").permitAll();*/
-        http    // 配置登陆页并允许访问
-                .formLogin().permitAll()
-                .and().authorizeRequests().antMatchers("/oauth/**", "/resources/**").permitAll()
-                // 其余所有请求全部需要认证
+        http.authorizeRequests()
+                .antMatchers("/**/test.*", "/**/*.css", "/**/*.js", "/**/images/*").permitAll()
+                // admin 角色访问权限
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                // user 角色访问权限
+                .antMatchers("/user/**").hasAuthority("ROLE_USER")
+                // 公共页面
+                .antMatchers("/pub/**").permitAll()
+                // 其余所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
-                // 关闭跨域保护
-                .and().csrf().disable();
+                .and()
+                // login 页面自定义配置都可以访问
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and().logout().permitAll();    //任何人都可以登出页面都可以访问
     }
 
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        // 忽略静态资源
+        web.ignoring().antMatchers("/resources/**");
+    }
 
     /**
      * 使用spring默认的认证Manager

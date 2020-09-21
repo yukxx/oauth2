@@ -17,12 +17,12 @@ import yukx.security.auth.enums.OauthResourceEnum;
 
 /**
  * @ClassName AuthorizationServerConfig
- * @Description TODO
+ * @Description 配置授权服务
  * @Author yukx
  * @Date 2020-09-14 17:56
  **/
 @Configuration
-@EnableAuthorizationServer // 配置授权服务
+@EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
 
@@ -31,6 +31,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     RedisConnectionFactory redisConnectionFactory;
+
 
     /**
      * 配置AuthorizationServer安全认证的相关信息，创建ClientCredentialsTokenEndpointFilter核心过滤器
@@ -76,6 +77,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.tokenStore(new RedisTokenStore(redisConnectionFactory))
                 .authenticationManager(authenticationManager)
-                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
+                .reuseRefreshTokens(true);
     }
 }

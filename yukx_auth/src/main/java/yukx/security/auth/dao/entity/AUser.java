@@ -1,5 +1,6 @@
 package yukx.security.auth.dao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -52,5 +53,7 @@ public class AUser implements Serializable {
     @TableField("mobile")
     private String mobile;
 
-
+    @ApiModelProperty("角色名称")
+    @TableField("role_name")
+    private String roleName;
 }

@@ -10,7 +10,7 @@ import yukx.security.auth.enums.OauthResourceEnum;
 
 /**
  * @ClassName AuthResourceConfig
- * @Description TODO
+ * @Description 配置资源服务器
  * @Author yukx
  * @Date 2020-09-16 15:49
  **/
@@ -22,7 +22,7 @@ public class AuthResourceConfig extends ResourceServerConfigurerAdapter {
         resources.resourceId(OauthResourceEnum.RESOURCE1.resource).stateless(true);
     }
 
-    @Override
+    /*@Override
     public void configure(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
@@ -32,5 +32,5 @@ public class AuthResourceConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/order/**").authenticated();
-    }
+    }*/
 }
