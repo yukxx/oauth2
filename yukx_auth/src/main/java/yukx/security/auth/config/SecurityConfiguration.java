@@ -63,25 +63,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .password(new BCryptPasswordEncoder().encode("123456"))
                 .authorities("USER");
     }*/
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/**/test.*", "/**/*.css", "/**/*.js", "/**/images/*").permitAll()
-                // admin 角色访问权限
-                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                // user 角色访问权限
-                .antMatchers("/user/**").hasAuthority("ROLE_USER")
-                // 公共页面
-                .antMatchers("/pub/**").permitAll()
-                // 其余所有请求全部需要鉴权认证
-                .anyRequest().authenticated()
-                .and()
-                // login 页面自定义配置都可以访问
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and().logout().permitAll();    //任何人都可以登出页面都可以访问
-    }
+
+    // 该配置会被 ResourceServerConfigurerAdapter 覆盖
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/**/test.*", "/**/*.css", "/**/*.js", "/**/images/*").permitAll()
+//                // admin 角色访问权限
+//                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+//                // user 角色访问权限
+//                .antMatchers("/user/**").hasAuthority("ROLE_USER")
+//                // 公共页面
+//                .antMatchers("/pub/**").permitAll()
+//                // 其余所有请求全部需要鉴权认证
+//                .anyRequest().authenticated()
+//                .and()
+//                // login 页面自定义配置都可以访问
+//                .formLogin()
+//                .loginPage("/login")
+//                .permitAll()
+//                .and().logout().permitAll();    //任何人都可以登出页面都可以访问
+//    }
 
 
     @Override
