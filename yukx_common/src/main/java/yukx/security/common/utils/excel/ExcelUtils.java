@@ -245,7 +245,7 @@ public class ExcelUtils {
     }
 
     // 设置样式方法
-    public static CellStyle createStyle(SXSSFWorkbook workbook, int fontsize) {
+    private static CellStyle createStyle(SXSSFWorkbook workbook, int fontsize) {
 
         // 1.2设置单元格样式
         CellStyle style = workbook.createCellStyle();
