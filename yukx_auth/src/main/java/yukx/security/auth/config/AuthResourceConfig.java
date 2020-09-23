@@ -23,6 +23,7 @@ public class AuthResourceConfig extends ResourceServerConfigurerAdapter {
         resources.resourceId(OauthResourceEnum.RESOURCE1.resource).stateless(true);
     }
 
+    // 参考：https://www.jianshu.com/p/fe1194ca8ecd
     @Override
     public void configure(HttpSecurity http) throws Exception {
         /*http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

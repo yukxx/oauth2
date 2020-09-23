@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: service
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://localhost:9001
+      name: service-${spring.profiles.active} # 指定git 文件名
+      label: master # 指定分支
+      profile: dev  # 指定环境
+# 设置 mybatis plus 配置文件路径
+mybatis-plus:
+  mapper-locations: classpath*:/mappers/*Mapper.xml
+  #mybatis-plus配置控制台打印完整带参数SQL语句
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+

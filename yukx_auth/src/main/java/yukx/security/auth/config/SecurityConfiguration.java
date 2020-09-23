@@ -65,6 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }*/
 
     // 该配置会被 ResourceServerConfigurerAdapter 覆盖
+    // 解释参考：https://www.jianshu.com/p/fe1194ca8ecd
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //        http.authorizeRequests()
