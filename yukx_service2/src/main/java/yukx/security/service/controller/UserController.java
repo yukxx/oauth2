@@ -31,4 +31,9 @@ public class UserController {
     public List<User> queryAll(){
         return userService.queryAll();
     }
+
+    @PostMapping("/testFeign.do")
+    public String testFeign(){
+        return "yukx";
+    }
 }
