@@ -47,6 +47,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.requestMatchers().anyRequest()
+                .and()
+                .authorizeRequests().antMatchers("/oauth/**").permitAll();
+    }
+
     /**
      * 基于内存方式读取用户信息
      *
@@ -85,8 +92,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .permitAll()
 //                .and().logout().permitAll();    //任何人都可以登出页面都可以访问
 //    }
-
-
     @Override
     public void configure(WebSecurity web) throws Exception {
         // 忽略静态资源

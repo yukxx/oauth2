@@ -38,7 +38,4 @@ public class MyUserDetailsServiceImpl implements UserDetailsService {
         return new User(user.getLoginName(), user.getPassword(), Arrays.asList(new SimpleGrantedAuthority(user.getRoleName())));
     }
 
-    private List getAuthority() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
-    }
 }
