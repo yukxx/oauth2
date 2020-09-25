@@ -1,4 +1,4 @@
-package yukx.security.auth.config;
+package yukx.security.auth.config.oauth2;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

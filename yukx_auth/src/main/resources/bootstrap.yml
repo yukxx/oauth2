@@ -5,7 +5,7 @@ spring:
     active: dev
   cloud:
     config:
-      uri: http://localhost:9009
+      uri: http://localhost:9001
       name: auth-${spring.profiles.active} # 指定git 文件名
       label: master # 指定分支
       profile: dev  # 指定环境

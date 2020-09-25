@@ -1,4 +1,4 @@
-package yukx.security.auth.config;
+package yukx.security.auth.config.oauth2;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

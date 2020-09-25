@@ -1,4 +1,4 @@
-package yukx.security.auth.config;
+package yukx.security.auth.config.oauth2;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -52,19 +52,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        // 属性说明参考：https://andaily.com/spring-oauth-server/db_table_description.html
+
         clients.inMemory().withClient(OauthClientEnum.CLIENT1.clientId)
                 .resourceIds(OauthResourceEnum.RESOURCE1.resource)
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("select")
                 .authorities("client")
-                .secret("{bcrypt}" + new BCryptPasswordEncoder().encode(OauthClientEnum.CLIENT1.secret))
+                .secret( new BCryptPasswordEncoder().encode(OauthClientEnum.CLIENT1.secret))
                 .and()
                 .withClient(OauthClientEnum.CLIENT2.clientId)
                 .resourceIds(OauthResourceEnum.RESOURCE1.resource)
                 .authorizedGrantTypes("password", "refresh_token")
                 .scopes("server")
                 .authorities("client")
-                .secret("{bcrypt}" + new BCryptPasswordEncoder().encode(OauthClientEnum.CLIENT1.secret));
+                // 需要添加前缀原因：org.springframework.security.crypto.password.DelegatingPasswordEncoder.matches`
+                .secret( new BCryptPasswordEncoder().encode(OauthClientEnum.CLIENT1.secret));
     }
 
     /**
