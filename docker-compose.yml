@@ -1,0 +1,6 @@
+version: '3'
+services:
+  yukx_eureka:
+    restart: always   # 重启方式
+    image: "eureka:1.0"  # 镜像名称
+    container_name: yukx_eureka # 容器名称
