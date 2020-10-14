@@ -24,6 +24,7 @@
         <module>yukx_service</module>
         <module>yukx_service2</module>
         <module>yukx_eureka</module>
+        <module>yukx_client</module>
     </modules>
 
     <properties>
@@ -152,11 +153,6 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.5.1</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
 

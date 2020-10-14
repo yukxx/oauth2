@@ -18,12 +18,6 @@
             <version>7.0</version>
         </dependency>
 
-        <!-- feign -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
         <!-- Excel poi -->
         <dependency>
             <groupId>org.apache.poi</groupId>

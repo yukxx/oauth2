@@ -114,6 +114,12 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>yukx.security</groupId>
+            <artifactId>yukx_client</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- redis, starter-redis包含jedis 和 lettuce，默认使用的是lettuce -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -138,6 +144,16 @@
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
             </plugin>
+
+
+            <!-- 原因就是多模块的项目不能把打包插件放到父级Pom中，只需在你子模块的SpringBoot独立运行的项目模块中依赖即可，如果是公共依赖的子模块(比如我项目中的core模块是一个公共依赖)也不需要依赖这个打包插件。-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+            </plugin>
         </plugins>
     </build>
+
+
 </project>

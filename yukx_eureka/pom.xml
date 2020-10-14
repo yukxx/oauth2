@@ -44,4 +44,15 @@
             </properties>
         </profile>
     </profiles>
+
+    <!-- 原因就是多模块的项目不能把打包插件放到父级Pom中，只需在你子模块的SpringBoot独立运行的项目模块中依赖即可，如果是公共依赖的子模块(比如我项目中的core模块是一个公共依赖)也不需要依赖这个打包插件。-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+            </plugin>
+        </plugins>
+    </build>
 </project>

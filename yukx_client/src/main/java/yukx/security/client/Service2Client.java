@@ -1,4 +1,4 @@
-package yukx.security.common.client;
+package yukx.security.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

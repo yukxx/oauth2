@@ -35,4 +35,8 @@ public class StringUtils {
         List<String> stringList = Arrays.asList(strs);
         return stringList.stream().allMatch(e -> e != null && !"".equals(e));
     }
+
+    public static void main(String[] args) {
+
+    }
 }
