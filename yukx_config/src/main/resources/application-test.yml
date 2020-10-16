@@ -1,17 +1,22 @@
 server:
-  port: 9001
+  port: 9002
 spring:
   cloud:
     config:
       server:
         git:
-          uri: https://github.com/yukxx/config-repe.git
+          uri: https://github.com/yukxx/oauthConfig.git
           username: ykx694883436@gmail.com
           password: ykxyj1314.
+          search-paths: oauthConfig # 检索git指定目录下面的文件， 可以逗号区分、模糊匹配等,临时存放在系统的位置，注意在日志中查看
 eureka:
   client:
     service-url:
-      defaultZone: http://yukx:123456@localhost:8761/eureka
+      #因为在eureka中java.net.URI不能区分下划线 yukx_eureka 修改为 yukx-eureka
+      #所以切记，当使用host作为defaultZone配置时，不要以下划线来命名
+      defaultZone: http://yukx:123456@yukx-eureka:8762/eureka
+    server:
+      enable-self-preservation: true
   instance:
     lease-expiration-duration-in-seconds: 10  #超过多少时间删除服务
     lease-renewal-interval-in-seconds: 5    #设置心跳时长
