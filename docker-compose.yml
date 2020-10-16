@@ -15,7 +15,6 @@ services:
   yukx-config:
     container_name: yukx-config
     image: "yukx-config:1.0"
-    hostname: yukx_eureka
     networks:
       - app-network
     depends_on:
@@ -27,6 +26,21 @@ services:
       - yukx-eureka
     build:
       ./yukx_config
+  yukx-auth:
+    container_name: yukx-auth
+    image: "yukx-auth:1.0"
+    networks:
+      - app-network
+    depends_on:
+      - yukx-eureka
+      - yukx-config
+    ports:
+      - 9021:9021
+    command: --spring.profiles.active=test
+    links:
+      - yukx-eureka
+    build:
+      ./yukx_auth
 networks:
   app-network:
     driver: bridge #以桥接模式创建自定义网络，否则会使用默认的网络
