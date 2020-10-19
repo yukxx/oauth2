@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yukx.security.client.Service2Client;
 import yukx.security.service.dao.entity.User;
 import yukx.security.service.service.UserService;
 
@@ -27,8 +26,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private Service2Client service2Client;
+    /*@Autowired
+    private Service2Client service2Client;*/
 
     @ApiOperation("查询所有用户")
     @PostMapping("/queryAll.do")
@@ -37,9 +36,9 @@ public class UserController {
     }
 
 
-    @ApiOperation("测试feign")
+    /*@ApiOperation("测试feign")
     @PostMapping("/testFeign.do")
     public String testFeign() {
         return service2Client.testFeign();
-    }
+    }*/
 }

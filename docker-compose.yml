@@ -5,7 +5,6 @@ services:
     image: "yukx-eureka:1.0"  # 镜像名称
     container_name: yukx-eureka # 容器名称
     hostname: localhost
-    #command: --spring.profiles.active=test
     ports:
       - 8762:8762
     build:
@@ -17,20 +16,19 @@ services:
   yukx-config:
     container_name: yukx-config
     image: "yukx-config:1.0"
-    networks:
+    networks:       # 接入网路
       - app-network
     depends_on:
       - yukx-eureka
     ports:
-      - 9002:9002
-    #command: --spring.profiles.active=test
-    links:
-      - yukx-eureka
-    build:
+      - 9002:9002   # 端口映射
+#    links:
+#      - yukx-eureka    所有服务接入同一网络，不需要links了
+    build:    # 没有镜像时从一下目录构建
       ./yukx_config
-    volumes:
+    volumes:  # 日志挂载
       - ./log:/data/logs
-    healthcheck:
+    healthcheck:    # 添加健康检查，需要提供检查接口，返回0表示正常
       test: ["CMD","curl","-f", "http://localhost:9002/health/doCheck"]
       interval: 30s
       timeout: 10s
@@ -64,19 +62,29 @@ services:
   yukx-auth:
     container_name: yukx-auth
     image: "yukx-auth:1.0"
-    #entrypoint: "bash /usr/local/bin/wait-for-it.sh yukx-config:9002 -- java -jar app.jar"
+    networks:
+      - app-network
+    depends_on:
+      yukx-config:
+        condition: service_healthy  # 健康检查，检查成功后才会启动本服务
+    ports:
+      - 9021:9021
+    build:
+      ./yukx_auth
+    volumes:
+      - ./log:/data/logs
+  yukx-service:
+    container_name: yukx-service
+    image: "yukx-service:1.0"
     networks:
       - app-network
     depends_on:
       yukx-config:
         condition: service_healthy
     ports:
-      - 9021:9021
-    #command: --spring.profiles.active=test
-#    links:
-#      - yukx-eureka
+      - 9011:9011
     build:
-      ./yukx_auth
+      ./yukx_service
     volumes:
       - ./log:/data/logs
 networks:
