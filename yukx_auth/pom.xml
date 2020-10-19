@@ -12,10 +12,6 @@
     <artifactId>yukx_auth</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>yukx.security</groupId>
-            <artifactId>yukx_common</artifactId>
-        </dependency>
 
         <!-- tomcat -->
         <dependency>
@@ -118,7 +114,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-
             </plugin>
         </plugins>
     </build>

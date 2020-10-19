@@ -5,13 +5,15 @@ services:
     image: "yukx-eureka:1.0"  # 镜像名称
     container_name: yukx-eureka # 容器名称
     hostname: localhost
-    command: --spring.profiles.active=test
+    #command: --spring.profiles.active=test
     ports:
       - 8762:8762
     build:
       ./yukx_eureka
     networks:
       - app-network
+    volumes:
+      - ./log:/data/logs
   yukx-config:
     container_name: yukx-config
     image: "yukx-config:1.0"
@@ -21,26 +23,56 @@ services:
       - yukx-eureka
     ports:
       - 9002:9002
-    command: --spring.profiles.active=test
+    #command: --spring.profiles.active=test
     links:
       - yukx-eureka
     build:
       ./yukx_config
+    volumes:
+      - ./log:/data/logs
+  yukx-mysql:
+    restart: always
+    image: mysql:5.7.24
+    container_name: yukx-mysql
+    networks:
+      - app-network
+    ports:
+      - 3306:3306
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: yukx
+    volumes:
+      - /Users/yukx/Documents/soft/mysqldb:/var/lib/mysql
+  yukx-redis:
+    restart: always
+    image: redis:4.0.12
+    container_name: yukx-redis
+    command: redis-server --requirepass "123456"
+    networks:
+      - app-network
+    ports:
+      - 6379:6379
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /Users/yukx/Documents/soft/docker_volume/redis:/data
   yukx-auth:
     container_name: yukx-auth
     image: "yukx-auth:1.0"
+    #entrypoint: "bash /usr/local/bin/wait-for-it.sh yukx-config:9002 -- java -jar app.jar"
     networks:
       - app-network
     depends_on:
-      - yukx-eureka
       - yukx-config
     ports:
       - 9021:9021
-    command: --spring.profiles.active=test
-    links:
-      - yukx-eureka
+    #command: --spring.profiles.active=test
+#    links:
+#      - yukx-eureka
     build:
       ./yukx_auth
+    volumes:
+      - ./log:/data/logs
 networks:
   app-network:
     driver: bridge #以桥接模式创建自定义网络，否则会使用默认的网络
