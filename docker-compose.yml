@@ -30,6 +30,11 @@ services:
       ./yukx_config
     volumes:
       - ./log:/data/logs
+    healthcheck:
+      test: ["CMD","curl","-f", "http://localhost:9002/health/doCheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
   yukx-mysql:
     restart: always
     image: mysql:5.7.24
@@ -63,7 +68,8 @@ services:
     networks:
       - app-network
     depends_on:
-      - yukx-config
+      yukx-config:
+        condition: service_healthy
     ports:
       - 9021:9021
     #command: --spring.profiles.active=test
