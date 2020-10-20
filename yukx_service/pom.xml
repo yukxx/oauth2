@@ -114,11 +114,11 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>yukx.security</groupId>
             <artifactId>yukx_client</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>-->
+        </dependency>
 
         <!-- redis, starter-redis包含jedis 和 lettuce，默认使用的是lettuce -->
         <dependency>
