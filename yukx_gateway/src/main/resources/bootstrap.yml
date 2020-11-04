@@ -12,6 +12,13 @@ spring:
       name: gateway-${spring.profiles.active} # 指定git 文件名
       label: master # 指定分支
       profile: dev  # 指定环境
+#    gateway:
+#      default-filters:
+#        - name: RequestRateLimiter
+#          args:
+#            key-resolver: '#{@hostAddrKeyResolver}'  #用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。
+#            redis-rate-limiter.replenishRate: 2  #流速 每秒
+#            redis-rate-limiter.burstCapacity: 10   #令牌桶的容积
   redis:
     database: 0
     timeout: 10000
