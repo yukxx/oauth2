@@ -12,33 +12,32 @@ spring:
       name: gateway-${spring.profiles.active} # 指定git 文件名
       label: master # 指定分支
       profile: dev  # 指定环境
+      # 当前路由信息是存到数据库的
 #    gateway:
-#      default-filters:
+#      default-filters:  # 设置默认过滤器
 #        - name: RequestRateLimiter
 #          args:
 #            key-resolver: '#{@hostAddrKeyResolver}'  #用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。
 #            redis-rate-limiter.replenishRate: 2  #流速 每秒
 #            redis-rate-limiter.burstCapacity: 10   #令牌桶的容积
-  redis:
-    database: 0
-    timeout: 10000
-    # Redis服务器地址
-    host: localhost
-    # Redis服务器连接端口
-    port: 6379
-    # Redis服务器连接密码（默认为空）
-    password: 123456
-    # 连接池最大连接数（使用负值表示没有限制）
-    pool:
-      max-active: 8
-      # 连接池最大阻塞等待时间（使用负值表示没有限制）
-      max-wait: -1
-      # 连接池中的最大空闲连接
-      max-idle: 8
-      # 连接池中的最小空闲连接
-      min-idle: 0
+#      routes:
+#        - id: service
+#          uri: Ib://service:9010 # 内部微服务可以这样写 其它为：http://baidu.com
+#          predicates:
+#            - Path=/service/**
+#          filters:
+#            - name: RequestRateLimiter
+#              args:
+#                key-resolver: '#{@hostAddrKeyResolver}'
+#                redis-rate-limiter.replenishRate: 2
+#                redis-rate-limiter.burstCapacity: 10
 server:
   port: 9030
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # 暴露所有的gateway 端点 可以访问GatewayControllerEndpoint下接口
 ---
 spring:
   application:

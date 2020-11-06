@@ -4,16 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 /**
  * @ClassName SecurityConfiguration
@@ -43,8 +42,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(new BCryptPasswordEncoder());
+        /*auth.userDetailsService(userDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());*/
+        auth.authenticationProvider(daoAuthenticationProvider());
     }
 
     @Override
@@ -52,6 +52,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.requestMatchers().anyRequest()
                 .and()
                 .authorizeRequests().antMatchers("/oauth/**").permitAll();
+    }
+
+    /**
+     * 权限提供者
+     * @return
+     */
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        // 设置加载用户服务
+        provider.setUserDetailsService(userDetailsService);
+        // 使用BCrypt 进行密码的hash
+        provider.setPasswordEncoder(new BCryptPasswordEncoder());
+        // 禁止隐藏用户未找到异常
+        provider.setHideUserNotFoundExceptions(false);
+        return provider;
     }
 
     /**

@@ -32,6 +32,9 @@ public class BeanConfig {
         return redisTemplate;
     }
 
+    /**
+     * 根据域名限流
+     */
     @Bean(name = "hostAddrKeyResolver")
     public KeyResolver hostAddrKeyResolver() {
         return exchange -> Mono.just(Objects.requireNonNull(exchange.getRequest().getRemoteAddress()).getAddress().getHostAddress());
