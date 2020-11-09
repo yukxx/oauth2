@@ -87,6 +87,20 @@ services:
       ./yukx_service
     volumes:
       - ./log:/data/logs
+  yukx-gateway:
+    container_name: yukx-gateway
+    image: "yukx-gateway:1.0"
+    networks:
+      - app-network
+    depends_on:
+      yukx-config:
+        condition: service_healthy
+    ports:
+      - 9031:9031
+    build:
+      ./yukx_gateway
+    volumes:
+      - ./log:/data/logs
 networks:
   app-network:
     driver: bridge #以桥接模式创建自定义网络，否则会使用默认的网络
