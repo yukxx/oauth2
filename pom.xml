@@ -22,7 +22,6 @@
         <module>yukx_gateway</module>
         <module>yukx_auth</module>
         <module>yukx_service</module>
-        <module>yukx_service2</module>
         <module>yukx_eureka</module>
         <module>yukx_client</module>
     </modules>
