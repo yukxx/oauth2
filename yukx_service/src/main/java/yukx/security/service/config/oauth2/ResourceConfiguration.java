@@ -39,7 +39,9 @@ public class ResourceConfiguration extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         //以/order/*开头的请求不用认证
         http.authorizeRequests()
-                .antMatchers("/order/*").permitAll()
+                .antMatchers("/order/*","/v2/api-docs", "/swagger-resources/configuration/ui",
+                        "/swagger-resources","/swagger-resources/configuration/security",
+                        "/swagger-ui.html","/course/coursebase/**").permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()

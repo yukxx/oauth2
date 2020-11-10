@@ -46,6 +46,8 @@ public class RouteServiceImpl implements RouteService {
             return;
         }
 
+        //redisUtils.lGet("",0,-1);
+
         routeList.forEach(e -> {
             String str = JSON.toJSONString(getRouteDefinition(e));
             redisUtils.set(GATEWAY_ROUTES + e.getRouteId(), str);

@@ -28,6 +28,8 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("请求头开始验证");
+        if (request.getRequestURI().contains("swagger"))
+            return true;
         String redisKey = (String) redisUtils.get(key);
         String secretKey = request.getHeader(key);
         if (StringUtils.isEmptys(secretKey) || !secretKey.equals(redisKey)) {
