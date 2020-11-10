@@ -1,0 +1,39 @@
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  application:
+    name: user
+  profiles: dev
+  cloud:
+    config:
+      uri: http://localhost:9001
+      name: user-${spring.profiles.active} # 指定git 文件名
+      label: master # 指定分支
+server:
+  port: 9030
+---
+spring:
+  application:
+    name: user
+  profiles: test
+  cloud:
+    config:
+      uri: http://localhost:9001
+      name: user-${spring.profiles.active} # 指定git 文件名
+      label: master # 指定分支
+server:
+  port: 9030
+---
+spring:
+  application:
+    name: user
+  profiles: prod
+  cloud:
+    config:
+      uri: http://localhost:9001
+      name: user-${spring.profiles.active} # 指定git 文件名
+      label: master # 指定分支
+server:
+  port: 9030

@@ -11,22 +11,8 @@ spring:
       uri: http://localhost:9001
       name: service-${spring.profiles.active} # 指定git 文件名
       label: master # 指定分支
-# 设置 mybatis plus 配置文件路径
-mybatis-plus:
-  mapper-locations: classpath*:/mappers/*Mapper.xml
-  #mybatis-plus配置控制台打印完整带参数SQL语句
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 5000
 server:
   port: 9010
-swagger:
-  enabled: true
-  version: "2.0"
 ---
 spring:
   application:
@@ -37,20 +23,8 @@ spring:
       uri: http://yukx-config:9002
       name: service-${spring.profiles.active}
       label: master
-mybatis-plus:
-  mapper-locations: classpath*:/mappers/*Mapper.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 5000
 server:
-  port: 9011
-swagger:
-  enabled: true
-  version: "2.0"
+  port: 9010
 ---
 spring:
   application:
@@ -61,15 +35,6 @@ spring:
       uri: http://yukx-config:9003
       name: service-${spring.profiles.active}
       label: master
-mybatis-plus:
-  mapper-locations: classpath*:/mappers/*Mapper.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 5000
 server:
-  port: 9012
+  port: 9010
 

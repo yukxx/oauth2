@@ -40,7 +40,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
-  port: 9021
+  port: 9020
 ---
 spring:
   application:
@@ -58,4 +58,4 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
-  port: 9022
+  port: 9020
