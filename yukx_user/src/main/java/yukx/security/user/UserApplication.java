@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Import;
+import yukx.security.client.config.TokenFeignClientInterceptor;
 
 /**
  * @ClassName UserApplication
@@ -14,7 +16,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "yukx.security.client")
+@Import(TokenFeignClientInterceptor.class)
+@EnableFeignClients(basePackages = "yukx.security.client.feign")
 public class UserApplication {
 
     public static void main(String[] args) {

@@ -52,7 +52,7 @@ spring:
         max-attempts: 20000
         max-interval: 2000
 server:
-  port: 9031
+  port: 9030
 management:
   endpoints:
     web:
@@ -69,4 +69,4 @@ spring:
       name: auth-${spring.profiles.active} # 指定git 文件名
       label: master # 指定分支
 server:
-  port: 9032
+  port: 9030

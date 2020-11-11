@@ -43,6 +43,16 @@
             <artifactId>fastjson</artifactId>
         </dependency>
 
+        <!-- swagger 接口文档 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
+
         <!-- gateway -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

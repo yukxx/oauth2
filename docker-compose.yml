@@ -68,7 +68,7 @@ services:
       yukx-config:
         condition: service_healthy  # 健康检查，检查成功后才会启动本服务
     ports:
-      - 9021:9021
+      - 9020:9020
     build:
       ./yukx_auth
     volumes:
@@ -82,7 +82,7 @@ services:
       yukx-config:
         condition: service_healthy
     ports:
-      - 9011:9011
+      - 9010:9010
     build:
       ./yukx_service
     volumes:
@@ -96,7 +96,7 @@ services:
       yukx-config:
         condition: service_healthy
     ports:
-      - 9031:9031
+      - 9030:9030
     build:
       ./yukx_gateway
     volumes:

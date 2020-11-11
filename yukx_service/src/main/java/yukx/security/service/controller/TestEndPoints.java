@@ -1,11 +1,15 @@
 package yukx.security.service.controller;
 
 import com.alibaba.fastjson.JSON;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import yukx.security.client.UserClient;
 import yukx.security.service.utils.AuthUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class TestEndPoints {
 
+    @Autowired
+    private UserClient userClient;
+
     @GetMapping("/product/{id}")
     public String getProduct(@PathVariable String id, HttpServletRequest req) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -30,5 +37,11 @@ public class TestEndPoints {
     @GetMapping("/order/{id}")
     public String getOrder(@PathVariable String id) {
         return "(No Auth Request)order id : " + id;
+    }
+
+    @ApiOperation("查询用户信息")
+    @PostMapping("/getUserInfo.do")
+    public String getUserInfo(String name) {
+        return userClient.getUserInfo(name);
     }
 }

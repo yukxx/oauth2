@@ -12,7 +12,7 @@ spring:
       name: user-${spring.profiles.active} # 指定git 文件名
       label: master # 指定分支
 server:
-  port: 9030
+  port: 9040
 ---
 spring:
   application:
@@ -24,7 +24,7 @@ spring:
       name: user-${spring.profiles.active} # 指定git 文件名
       label: master # 指定分支
 server:
-  port: 9030
+  port: 9040
 ---
 spring:
   application:
@@ -36,4 +36,4 @@ spring:
       name: user-${spring.profiles.active} # 指定git 文件名
       label: master # 指定分支
 server:
-  port: 9030
+  port: 9040
