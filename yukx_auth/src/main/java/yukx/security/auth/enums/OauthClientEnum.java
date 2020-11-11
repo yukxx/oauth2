@@ -8,7 +8,8 @@ package yukx.security.auth.enums;
  **/
 public enum OauthClientEnum {
     CLIENT1("client_1", "123456"),
-    CLIENT2("client_2", "123456");
+    CLIENT2("client_2", "123456"),
+    USER("user", "123456");
 
     public String clientId;
     public String secret;

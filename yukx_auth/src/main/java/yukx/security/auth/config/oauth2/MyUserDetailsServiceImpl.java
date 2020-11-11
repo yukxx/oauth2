@@ -1,8 +1,6 @@
 package yukx.security.auth.config.oauth2;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,7 +12,6 @@ import yukx.security.auth.dao.entity.AUser;
 import yukx.security.auth.dao.mappers.AUserMapper;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @ClassName MyUserDetailsServiceImpl

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yukx.security.client.UserClient;
+import yukx.security.client.feign.UserClient;
 import yukx.security.service.utils.AuthUtils;
 
 import javax.servlet.http.HttpServletRequest;

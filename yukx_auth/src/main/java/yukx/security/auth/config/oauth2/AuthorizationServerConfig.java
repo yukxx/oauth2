@@ -37,7 +37,17 @@ import java.util.Map;
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+    /**
+     * token有效时间
+     */
+    public static final int ACCESS_TOKEN_VALIDITY_SECONDS = 60*60*12;
 
+    /**
+     * token刷新有效期
+     * 一般刷新有效期大于token有效期，刷新token操作，不会修改认证后的refreshtoken和登录信息
+     * 刷新操作后token会改变
+     */
+    public static final int REFRESH_TOKEN_VALIDITY_SECONDS = 60*60*12*3;
 
     @Autowired
     AuthenticationManager authenticationManager;        // oauth2内置对象
@@ -68,19 +78,23 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // 属性说明参考：https://andaily.com/spring-oauth-server/db_table_description.html
 
         clients.inMemory().withClient(OauthClientEnum.CLIENT1.clientId)
-                .resourceIds(OauthResourceEnum.RESOURCE1.resource)
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("select")
+                .resourceIds(OauthResourceEnum.RESOURCE1.resource,OauthResourceEnum.USER.resource)
+                .authorizedGrantTypes("password", "refresh_token")
+                .scopes("all")
                 .authorities("client")
+                .accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
+                .refreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECONDS)
                 .secret("{bcrypt}" + new BCryptPasswordEncoder().encode(OauthClientEnum.CLIENT1.secret))
                 .and()
-                .withClient(OauthClientEnum.CLIENT2.clientId)
-                .resourceIds(OauthResourceEnum.RESOURCE1.resource)
+                .withClient(OauthClientEnum.USER.clientId)
+                .resourceIds(OauthResourceEnum.USER.resource)
                 .authorizedGrantTypes("password", "refresh_token")
-                .scopes("server")
+                .accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
+                .refreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECONDS)
+                .scopes("all")
                 .authorities("client")
                 // 需要添加前缀原因：org.springframework.security.crypto.password.DelegatingPasswordEncoder.matches`
-                .secret("{bcrypt}" + new BCryptPasswordEncoder().encode(OauthClientEnum.CLIENT1.secret));
+                .secret("{bcrypt}" + new BCryptPasswordEncoder().encode(OauthClientEnum.USER.secret));
     }
 
     /**

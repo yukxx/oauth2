@@ -31,7 +31,7 @@ public class ResourceConfiguration extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.resourceId(OauthResourceEnum.RESOURCE1.resource).stateless(true);
+        resources.resourceId(OauthResourceEnum.USER.resource).stateless(true);
         resources.tokenServices(defaultTokenServices());
     }
 

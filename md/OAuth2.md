@@ -137,3 +137,85 @@ try {
         return provider;
     }
 ```
+###### 4.携带token访问资源服务时,会经过`org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter`过滤器。里面默认的`AuthenticationManager`为`org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager`
+```java
+/**
+* 该方法是验证token的权限，包含resources，client的验证
+*/
+public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
+		if (authentication == null) {
+			throw new InvalidTokenException("Invalid token (token not found)");
+		}
+		// 获取请求头中的token值
+        String token = (String) authentication.getPrincipal();
+		
+		/**
+		* 根据token获取redis里面存储的值
+		* tokenServices默认为 DefaultTokenServices
+		*/
+		OAuth2Authentication auth = tokenServices.loadAuthentication(token);
+		if (auth == null) {
+			throw new InvalidTokenException("Invalid token: " + token);
+		}
+
+		Collection<String> resourceIds = auth.getOAuth2Request().getResourceIds();
+		if (resourceId != null && resourceIds != null && !resourceIds.isEmpty() && !resourceIds.contains(resourceId)) {
+			throw new OAuth2AccessDeniedException("Invalid token does not contain resource id (" + resourceId + ")");
+		}
+
+		checkClientDetails(auth);
+
+		if (authentication.getDetails() instanceof OAuth2AuthenticationDetails) {
+			OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
+			// Guard against a cached copy of the same details
+			if (!details.equals(auth.getDetails())) {
+				// Preserve the authentication details from the one loaded by token services
+				details.setDecodedDetails(auth.getDetails());
+			}
+		}
+		auth.setDetails(authentication.getDetails());
+		auth.setAuthenticated(true);
+		return auth;
+
+	}
+```
+###### 5. 接着上面代码说到的`DefaultTokenServices`
+```java
+/**
+* 根据token值加载用户信息
+*/
+public OAuth2Authentication loadAuthentication(String accessTokenValue) throws AuthenticationException,
+			InvalidTokenException {
+			// 获取redis中以access开头的key值，包含tokenType，token，scope，refreshToken
+		OAuth2AccessToken accessToken = tokenStore.readAccessToken(accessTokenValue);
+		if (accessToken == null) {
+			throw new InvalidTokenException("Invalid access token: " + accessTokenValue);
+		}
+		else if (accessToken.isExpired()) {
+			tokenStore.removeAccessToken(accessToken);
+			throw new InvalidTokenException("Access token expired: " + accessTokenValue);
+		}
+// 根据token获取存储在redis中以auth开头的权限信息，包含此token所拥有的resources，authorities...
+		OAuth2Authentication result = tokenStore.readAuthentication(accessToken);
+		if (result == null) {
+			// in case of race condition
+			throw new InvalidTokenException("Invalid access token: " + accessTokenValue);
+		}
+		if (clientDetailsService != null) {
+			String clientId = result.getOAuth2Request().getClientId();
+			try {
+				clientDetailsService.loadClientByClientId(clientId);
+			}
+			catch (ClientRegistrationException e) {
+				throw new InvalidTokenException("Client not valid: " + clientId, e);
+			}
+		}
+		return result;
+	}
+```
+redis存储信息图片
+![](./img/11.png)
+
+最终根据token获取的所有信息截图
+![](./img/10.png)

@@ -7,7 +7,8 @@ package yukx.security.common.enums;
  * @Date 2020-09-16 14:34
  **/
 public enum OauthResourceEnum {
-    RESOURCE1("resource1", "123456");
+    RESOURCE1("resource1", "123456"),
+    USER("user", "123456");
 
     public String resource;
     public String secret;
