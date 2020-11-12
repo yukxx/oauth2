@@ -38,6 +38,9 @@ management:
     web:
       exposure:
         include: "*"  # 暴露所有的gateway 端点 可以访问GatewayControllerEndpoint下接口
+logging:
+  config: classpath:logback-spring.xml
+  path: /Users/yukx/Documents/workspace/oauth/newLog/gateway/
 ---
 spring:
   application:
@@ -58,6 +61,9 @@ management:
     web:
       exposure:
         include: "*"
+logging:
+  config: classpath:logback-spring.xml
+  path: /data/log/gateway/
 ---
 spring:
   application:
@@ -70,3 +76,6 @@ spring:
       label: master # 指定分支
 server:
   port: 9030
+logging:
+  config: classpath:logback-spring.xml
+  path: /data/log/gateway/
