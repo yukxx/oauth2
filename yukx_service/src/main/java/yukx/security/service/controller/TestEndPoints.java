@@ -5,6 +5,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +29,9 @@ public class TestEndPoints {
     @Autowired
     private UserClient userClient;
 
+    @Autowired
+    private TokenStore tokenStore;
+
     @GetMapping("/product/{id}")
     public String getProduct(@PathVariable String id, HttpServletRequest req) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -41,7 +47,14 @@ public class TestEndPoints {
 
     @ApiOperation("查询用户信息")
     @PostMapping("/getUserInfo.do")
-    public String getUserInfo(String name) {
+    public String getUserInfo(String name, HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        String[] arr =token.split("bearer");
+        token = arr[1];
+        OAuth2AccessToken accessToken = tokenStore.readAccessToken(token);
+        OAuth2Authentication result = tokenStore.readAuthentication(accessToken);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         return userClient.getUserInfo(name);
     }
 }
