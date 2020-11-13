@@ -31,7 +31,7 @@ spring:
   profiles: test
   cloud:
     config:
-      uri: http://localhost:9001
+      uri: http://yukx-config:9002
       name: user-${spring.profiles.active} # 指定git 文件名
       label: master # 指定分支
 server:
