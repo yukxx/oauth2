@@ -1,16 +1,17 @@
 package yukx.security.auth.config.oauth2;
 
 import com.alibaba.fastjson.JSON;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -24,6 +25,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import yukx.security.auth.enums.OauthClientEnum;
 import yukx.security.auth.enums.OauthResourceEnum;
+import yukx.security.common.model.UserInfo;
+import yukx.security.common.model.UserInfoDto;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,14 +43,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     /**
      * token有效时间
      */
-    public static final int ACCESS_TOKEN_VALIDITY_SECONDS = 60*60*12;
+    public static final int ACCESS_TOKEN_VALIDITY_SECONDS = 60 * 60 * 12;
 
     /**
      * token刷新有效期
      * 一般刷新有效期大于token有效期，刷新token操作，不会修改认证后的refreshtoken和登录信息
      * 刷新操作后token会改变
      */
-    public static final int REFRESH_TOKEN_VALIDITY_SECONDS = 60*60*12*3;
+    public static final int REFRESH_TOKEN_VALIDITY_SECONDS = 60 * 60 * 12 * 3;
 
     @Autowired
     AuthenticationManager authenticationManager;        // oauth2内置对象
@@ -78,7 +81,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // 属性说明参考：https://andaily.com/spring-oauth-server/db_table_description.html
 
         clients.inMemory().withClient(OauthClientEnum.CLIENT1.clientId)
-                .resourceIds(OauthResourceEnum.RESOURCE1.resource,OauthResourceEnum.USER.resource)
+                .resourceIds(OauthResourceEnum.RESOURCE1.resource, OauthResourceEnum.USER.resource)
                 .authorizedGrantTypes("password", "refresh_token")
                 .scopes("all")
                 .authorities("client")
@@ -136,16 +139,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
              */
             @Override
             public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-                String userName = authentication.getUserAuthentication().getName();
+                UserInfo userInfo = (UserInfo) authentication.getUserAuthentication().getPrincipal();
                 // 得到用户名， 去处理数据库可以拿到当前用户信息和角色信息（需要传递到服务中用到的信息）
                 final Map<String, Object> additionalInformation = new HashMap<>();
-                // map假装用户实体
-                Map<String, String> userinfo = new HashMap<>();
-                userinfo.put("id", "1");
-                userinfo.put("username", "yukx");
-                userinfo.put("qqnum", "694883436");
-                userinfo.put("userFlag", "1");
-                additionalInformation.put("userinfo", JSON.toJSONString(userinfo));
+                UserInfoDto dto = new UserInfoDto();
+                BeanUtils.copyProperties(userInfo, dto);
+                additionalInformation.put("userinfo", JSON.toJSONString(dto));
                 ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInformation);
                 return super.enhance(accessToken, authentication);
             }

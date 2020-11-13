@@ -9,8 +9,8 @@
 
     <contextName>logback</contextName>
     <!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
-    <!--<property name="log.path" value="/data/log/oauth/auth/" />-->
-    <property name="log.path" value="/data/log/auth" />
+    <property name="log.path" value="./log/auth" />
+    <!--<property name="log.path" value="/data/log/auth" />-->
 
     <!-- 彩色日志 -->
     <!-- 彩色日志依赖的渲染类 -->
@@ -67,7 +67,6 @@
     <springProfile name="dev">
         <root level="info">
             <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="FILE"/>
         </root>
     </springProfile>
 
