@@ -1,5 +1,5 @@
 # 基于哪个镜像
-FROM yukx-base:1.0
+FROM base:1.0
 EXPOSE 8762
 # 将本地文件夹挂载到当前容器
 #VOLUME /tmp

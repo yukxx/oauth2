@@ -11,8 +11,8 @@ services:
       ./yukx_eureka
     networks:
       - app-network
-    volumes:
-      - ./log:/data/logs
+#    volumes:
+#      - ./log:/data/logs
   yukx-config:
     container_name: yukx-config
     image: "yukx-config:1.0"
@@ -26,8 +26,8 @@ services:
 #      - yukx-eureka    所有服务接入同一网络，不需要links了
     build:    # 没有镜像时从一下目录构建
       ./yukx_config
-    volumes:  # 日志挂载
-      - ./log:/data/logs
+#    volumes:  # 日志挂载
+#      - ./log:/data/logs
     healthcheck:    # 添加健康检查，需要提供检查接口，返回0表示正常
       test: ["CMD","curl","-f", "http://localhost:9002/health/doCheck"]
       interval: 30s
@@ -71,8 +71,8 @@ services:
       - 9020:9020
     build:
       ./yukx_auth
-    volumes:
-      - ./log:/data/logs
+#    volumes:
+#      - ./log:/data/logs
   yukx-service:
     container_name: yukx-service
     image: "yukx-service:1.0"
@@ -85,8 +85,8 @@ services:
       - 9010:9010
     build:
       ./yukx_service
-    volumes:
-      - ./log:/data/logs
+#    volumes:
+#      - ./log:/data/logs
   yukx-user:
     container_name: yukx-user
     image: "yukx-user:1.0"
@@ -99,8 +99,8 @@ services:
       - 9040:9040
     build:
       ./yukx_user
-    volumes:
-      - ./log:/data/logs
+#    volumes:
+#      - ./log:/data/logs
   yukx-gateway:
     container_name: yukx-gateway
     image: "yukx-gateway:1.0"
@@ -113,8 +113,8 @@ services:
       - 9030:9030
     build:
       ./yukx_gateway
-    volumes:
-      - ./log:/data/logs
+#    volumes:
+#      - ./log:/data/logs
 networks:
   app-network:
     driver: bridge #以桥接模式创建自定义网络，否则会使用默认的网络
