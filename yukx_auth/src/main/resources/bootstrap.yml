@@ -36,17 +36,8 @@ spring:
       retry:
         max-attempts: 20000
         max-interval: 2000
-# 设置 mybatis plus 配置文件路径
-mybatis-plus:
-  mapper-locations: classpath*:/mappers/*Mapper.xml
-  #mybatis-plus配置控制台打印完整带参数SQL语句
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
   port: 9020
-logging:
-  config: classpath:logback-spring.xml
-  path: /data/log/auth/
 ---
 spring:
   application:

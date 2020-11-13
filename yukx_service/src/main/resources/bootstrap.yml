@@ -37,9 +37,6 @@ spring:
       label: master
 server:
   port: 9010
-logging:
-  config: classpath:logback-spring.xml
-  path: /data/log/service/
 ---
 spring:
   application:

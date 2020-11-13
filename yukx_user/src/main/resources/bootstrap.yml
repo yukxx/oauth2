@@ -36,9 +36,6 @@ spring:
       label: master # 指定分支
 server:
   port: 9040
-logging:
-  config: classpath:logback-spring.xml
-  path: /data/log/user/
 ---
 spring:
   application:
