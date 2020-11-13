@@ -20,9 +20,6 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
   port: 9020
-logging:
-  config: classpath:logback-spring.xml
-  path: /Users/yukx/Documents/workspace/oauth/newLog/auth/
 ---
 spring:
   application:
