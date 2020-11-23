@@ -156,6 +156,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Bean
     public TokenStore tokenStore() {
+        // 个人理解：TokenStore 是用来存储，解析token信息的
         return new RedisTokenStore(redisConnectionFactory);
     }
 }

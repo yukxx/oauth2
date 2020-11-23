@@ -47,7 +47,7 @@ public class CodeGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir")+"/" + scanner("项目名");//"/yukx_service";
+        String projectPath = System.getProperty("user.dir") + "/yukx_service";
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("yukx");
         gc.setOpen(false);
@@ -66,12 +66,12 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         //pc.setModuleName(scanner("模块名"));
-        pc.setParent(scanner("父包名"));//("yukx.security.service");
-        pc.setEntity(scanner("Entity包名"));//("dao.entity");
-        pc.setMapper(scanner("Mapper包名"));//("dao.mappers");
-        pc.setService(scanner("Service包名"));//("service");
-        pc.setServiceImpl(scanner("Service Impl包名"));//("service.impl");
-        pc.setController(scanner("Controller包名"));//("controller");
+        pc.setParent("yukx.security.service");
+        pc.setEntity("dao.entity");
+        pc.setMapper("dao.mappers");
+        pc.setService("service");
+        pc.setServiceImpl("service.impl");
+        //pc.setController(scanner("Controller包名"));//("controller");
         mpg.setPackageInfo(pc);
 
 // 自定义配置

@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import yukx.security.auth.config.oauth2.my.MyDaoAuthenticationProvider;
 
 /**
  * @ClassName SecurityConfiguration
@@ -56,11 +57,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * 权限提供者
+     *
      * @return
      */
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider provider = new MyDaoAuthenticationProvider();
         // 设置加载用户服务
         provider.setUserDetailsService(userDetailsService);
         // 使用BCrypt 进行密码的hash
