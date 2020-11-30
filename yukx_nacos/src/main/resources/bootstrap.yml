@@ -1,0 +1,55 @@
+spring:
+  profiles:
+    active: dev
+---
+server:
+  port: 9050
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848         #服务器地址
+        namespace: Public                   #默认为Public命名空间,可以省略不写
+        group: DEFAULT_GROUP                #指定配置群组 --如果是Public命名空间 则可以省略群组配置
+        prefix: member                      #文件名 -- 如果没有配置则默认为 ${spring.appliction.name}
+        file-extension: yaml                 #指定文件后缀
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 4350b016-f5c5-4e90-b391-356cf48e22d2
+  application:
+    name: myNacos
+  profiles: dev
+---
+server:
+  port: 9050
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: Public
+        group: DEFAULT_GROUP
+        prefix: member
+        file-extension: yaml
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: myNacos
+  profiles: test
+---
+server:
+  port: 9050
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: Public
+        group: DEFAULT_GROUP
+        prefix: member
+        file-extension: yaml
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: myNacos
+  profiles: prod
