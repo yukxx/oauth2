@@ -7,18 +7,15 @@ spring:
     name: user
   profiles: dev
   cloud:
-    config:
-      uri: http://localhost:9001
-      name: user-${spring.profiles.active} # 指定git 文件名
-      label: master # 指定分支
-  sleuth:
-    web:
-      client:
-        enabled: true
-    sampler:
-      probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
-  zipkin:
-    base-url: http://localhost:9411/  # 指定 zipkin 服务器地址
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 4350b016-f5c5-4e90-b391-356cf48e22d2
+      config:
+        server-addr: 127.0.0.1:8848
+        group: DEFAULT_GROUP
+        file-extension: yml  # 文件后缀
+        prefix: user  # 文件名
 server:
   port: 9040
 ---
@@ -27,24 +24,14 @@ spring:
     name: user
   profiles: test
   cloud:
-    config:
-      uri: http://yukx-config:9002
-      name: user-${spring.profiles.active} # 指定git 文件名
-      label: master # 指定分支
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 4350b016-f5c5-4e90-b391-356cf48e22d2
+      config:
+        server-addr: 127.0.0.1:8848
+        group: DEFAULT_GROUP
+        file-extension: yml
+        prefix: service  # 文件名
 server:
   port: 9040
----
-spring:
-  application:
-    name: user
-  profiles: prod
-  cloud:
-    config:
-      uri: http://localhost:9001
-      name: user-${spring.profiles.active} # 指定git 文件名
-      label: master # 指定分支
-server:
-  port: 9040
-logging:
-  config: classpath:logback-spring.xml
-  path: /data/log/user/

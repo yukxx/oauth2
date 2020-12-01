@@ -1,0 +1,75 @@
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  application:
+    name: gateway
+  profiles: dev
+  cloud:
+    config:
+      uri: http://localhost:9001
+      name: gateway-${spring.profiles.active} # 指定git 文件名
+      label: master # 指定分支
+      profile: dev  # 指定环境
+      # 当前路由信息是存到数据库的
+#    gateway:
+#      default-filters:  # 设置默认过滤器
+#        - name: RequestRateLimiter
+#          args:
+#            key-resolver: '#{@hostAddrKeyResolver}'  #用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。
+#            redis-rate-limiter.replenishRate: 2  #流速 每秒
+#            redis-rate-limiter.burstCapacity: 10   #令牌桶的容积
+#      routes:
+#        - id: service
+#          uri: Ib://service:9010 # 内部微服务可以这样写 其它为：http://baidu.com
+#          predicates:
+#            - Path=/service/**
+#          filters:
+#            - name: RequestRateLimiter
+#              args:
+#                key-resolver: '#{@hostAddrKeyResolver}'
+#                redis-rate-limiter.replenishRate: 2
+#                redis-rate-limiter.burstCapacity: 10
+server:
+  port: 9030
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # 暴露所有的gateway 端点 可以访问GatewayControllerEndpoint下接口
+---
+spring:
+  application:
+    name: gateway
+  profiles: test
+  cloud:
+    config:
+      uri: http://yukx-config:9002
+      name: gateway-${spring.profiles.active} # 指定git 文件名
+      label: master # 指定分支
+      retry:
+        max-attempts: 20000
+        max-interval: 2000
+server:
+  port: 9030
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+---
+spring:
+  application:
+    name: gateway
+  profiles: prod
+  cloud:
+    config:
+      uri: http://yukx-config:9002
+      name: auth-${spring.profiles.active} # 指定git 文件名
+      label: master # 指定分支
+server:
+  port: 9030
+logging:
+  config: classpath:logback-spring.xml
+  path: /data/log/gateway/

@@ -7,17 +7,15 @@ spring:
     name: auth
   profiles: dev
   cloud:
-    config:
-      uri: http://localhost:9001
-      name: auth-${spring.profiles.active} # 指定git 文件名
-      label: master # 指定分支
-      profile: dev  # 指定环境
-# 设置 mybatis plus 配置文件路径
-mybatis-plus:
-  mapper-locations: classpath*:/mappers/*Mapper.xml
-  #mybatis-plus配置控制台打印完整带参数SQL语句
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 4350b016-f5c5-4e90-b391-356cf48e22d2
+      config:
+        server-addr: 127.0.0.1:8848
+        group: DEFAULT_GROUP
+        file-extension: yml
+        prefix: auth
 server:
   port: 9020
 ---
@@ -26,33 +24,14 @@ spring:
     name: auth
   profiles: test
   cloud:
-    config:
-      uri: http://yukx-config:9002
-      name: auth-${spring.profiles.active} # 指定git 文件名
-      label: master # 指定分支
-      retry:
-        max-attempts: 20000
-        max-interval: 2000
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 4350b016-f5c5-4e90-b391-356cf48e22d2
+      config:
+        server-addr: 127.0.0.1:8848
+        group: DEFAULT_GROUP
+        file-extension: yml
+        prefix: auth
 server:
   port: 9020
----
-spring:
-  application:
-    name: auth
-  profiles: prod
-  cloud:
-    config:
-      uri: http://yukx-config:9002
-      name: auth-${spring.profiles.active} # 指定git 文件名
-      label: master # 指定分支
-# 设置 mybatis plus 配置文件路径
-mybatis-plus:
-  mapper-locations: classpath*:/mappers/*Mapper.xml
-  #mybatis-plus配置控制台打印完整带参数SQL语句
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-server:
-  port: 9020
-logging:
-  config: classpath:logback-spring.xml
-  path: /data/log/auth/
