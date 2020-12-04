@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import yukx.security.common.enums.OauthResourceEnum;
+import yukx.security.service.exception.MyAuthenticationEntryPoint;
 
 /**
  * @ClassName ResourceConfiguration
@@ -31,6 +32,8 @@ public class ResourceConfiguration extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        // 添加自定义异常结果返回
+        resources.authenticationEntryPoint(new MyAuthenticationEntryPoint());
         resources.resourceId(OauthResourceEnum.RESOURCE1.resource).stateless(true);
         resources.tokenServices(defaultTokenServices());
     }
@@ -39,9 +42,9 @@ public class ResourceConfiguration extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         //以/order/*开头的请求不用认证
         http.authorizeRequests()
-                .antMatchers("/order/*","/v2/api-docs", "/swagger-resources/configuration/ui",
-                        "/swagger-resources","/swagger-resources/configuration/security",
-                        "/swagger-ui.html","/course/coursebase/**").permitAll()
+                .antMatchers("/order/*", "/v2/api-docs", "/swagger-resources/configuration/ui",
+                        "/swagger-resources", "/swagger-resources/configuration/security",
+                        "/swagger-ui.html", "/course/coursebase/**").permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()

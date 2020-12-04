@@ -138,6 +138,28 @@ try {
     }
 ```
 ###### 4.携带token访问资源服务时,会经过`org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter`过滤器。里面默认的`AuthenticationManager`为`org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager`
+注意
+-------
+如果在`OAuth2AuthenticationProcessingFilter`中没有获取到用户信息，则接下来会经过一个`AnonymousAuthenticationFilter`过滤器
+```java
+public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
+
+// 这里会判断是否已经找到了用户信息，如果没有则创建一个游客用户信息
+		if (SecurityContextHolder.getContext().getAuthentication() == null) {
+			SecurityContextHolder.getContext().setAuthentication(
+					createAuthentication((HttpServletRequest) req));
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("Populated SecurityContextHolder with anonymous token: '"
+						+ SecurityContextHolder.getContext().getAuthentication() + "'");
+			}
+		}
+		
+```
+
+一下是`OAuth2AuthenticationManager`验证
+
 ```java
 /**
 * 该方法是验证token的权限，包含resources，client的验证
@@ -219,3 +241,34 @@ redis存储信息图片
 
 最终根据token获取的所有信息截图
 ![](./img/10.png)
+
+### 6. 异常
+1. 由于spring security的认证原理是通过注册到容器tomcat的filter链上，使得认证异常不能通过DispatcherServlet，所以@ExceptionHandler处理不到
+2. 认证服务和资源服务的异常要分开处理
+3. 资源服务
+    1. 访问资源服务时会经过`OAuth2AuthenticationProcessingFilter`过滤器
+    2. ```java 
+		try {
+        // 获取request中的token字符串
+			Authentication authentication = tokenExtractor.extract(request);
+			
+			if (authentication == null) {
+				/** 省略代码 **/			}
+			else {
+				/** 省略代码 **/
+				// 开始验证token
+			 Authentication authResult = authenticationManager.authenticate(authentication);
+			 /** 省略代码 **/
+		}
+		catch (OAuth2Exception failed) {
+					/** 省略代码 **/
+			
+			// 此处可以实现AuthenticationEntryPoint接口自定义异常返回
+			// 该默认实现为 OAuth2AuthenticationEntryPoint
+		  authenticationEntryPoint.commence(request, response,
+					new InsufficientAuthenticationException(failed.getMessage(), failed));
+
+			return;
+		}
+		```
+		![](./img/12.png)

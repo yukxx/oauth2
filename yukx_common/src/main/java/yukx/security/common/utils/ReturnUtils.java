@@ -41,6 +41,12 @@ public class ReturnUtils<T> {
         return this;
     }
 
+    public ReturnUtils error(int code, String message) {
+        this.returnCode = code;
+        this.returnMessage = message;
+        return this;
+    }
+
     public ReturnUtils error() {
         return error("操作失败");
     }
