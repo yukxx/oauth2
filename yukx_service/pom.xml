@@ -12,6 +12,13 @@
     <artifactId>yukx_service</artifactId>
 
     <dependencies>
+<!--
+        &lt;!&ndash; seata 分布式事务管理 &ndash;&gt;
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-all</artifactId>
+            <version>1.2.0</version>
+        </dependency>-->
 
         <!-- tomcat -->
         <dependency>

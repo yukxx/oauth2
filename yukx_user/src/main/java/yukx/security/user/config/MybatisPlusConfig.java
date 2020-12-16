@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @Date 2020-09-14 14:43
  **/
 @Configuration
-@MapperScan("yukx.security.service.dao.mappers")
+@MapperScan("yukx.security.user.dao.mappers")
 public class MybatisPlusConfig {
 
     /**

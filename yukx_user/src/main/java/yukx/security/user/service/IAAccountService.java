@@ -1,6 +1,6 @@
-package yukx.security.service.service;
+package yukx.security.user.service;
 
-import yukx.security.service.dao.entity.AAccount;
+import yukx.security.user.dao.entity.AAccount;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,9 +9,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author yukx
- * @since 2020-09-14
+ * @since 2020-12-15
  */
 public interface IAAccountService extends IService<AAccount> {
     String testTransaction(Integer open);
-    String testTransaction2(Integer open);
+
 }

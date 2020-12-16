@@ -1,5 +1,6 @@
 package yukx.security.client.feign;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,4 +20,9 @@ public interface UserClient {
      */
     @PostMapping("/user/getUserInfo.do")
     String getUserInfo(@RequestParam("name") String name);
+
+
+    @ApiOperation("测试事务")
+    @PostMapping("/user/testTransaction.do")
+    String testTransaction(@RequestParam("open") Integer open);
 }

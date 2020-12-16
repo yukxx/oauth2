@@ -6,6 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
 import yukx.security.client.config.TokenFeignClientInterceptor;
+import yukx.security.common.autoconfig.EnableExcelUtil;
 import yukx.security.common.exceptionHandler.MyExceptionHandler;
 
 /**
@@ -19,6 +20,7 @@ import yukx.security.common.exceptionHandler.MyExceptionHandler;
 @EnableDiscoveryClient
 @Import({TokenFeignClientInterceptor.class, MyExceptionHandler.class})
 @EnableFeignClients(basePackages = "yukx.security.client.feign")
+@EnableExcelUtil
 public class ServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(ServiceApplication.class, args);

@@ -1,4 +1,4 @@
-package yukx.security.service.dao.entity;
+package yukx.security.user.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author yukx
- * @since 2020-09-14
+ * @since 2020-12-15
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

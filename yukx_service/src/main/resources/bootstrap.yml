@@ -10,7 +10,7 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-        namespace: 4350b016-f5c5-4e90-b391-356cf48e22d2
+        #namespace: 4350b016-f5c5-4e90-b391-356cf48e22d2
       config:
         server-addr: 127.0.0.1:8848
         group: DEFAULT_GROUP

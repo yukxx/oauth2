@@ -1,4 +1,4 @@
-package yukx.security.service.generator;
+package yukx.security.user.generator;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -47,7 +47,7 @@ public class CodeGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir") + "/yukx_service";
+        String projectPath = System.getProperty("user.dir") + "/yukx_user";
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("yukx");
         gc.setOpen(false);
@@ -66,7 +66,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         //pc.setModuleName(scanner("模块名"));
-        pc.setParent("yukx.security.service");
+        pc.setParent("yukx.security.user");
         pc.setEntity("dao.entity");
         pc.setMapper("dao.mappers");
         pc.setService("service");

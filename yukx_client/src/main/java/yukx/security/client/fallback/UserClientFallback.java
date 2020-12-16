@@ -13,4 +13,9 @@ public class UserClientFallback implements UserClient {
     public String getUserInfo(String name) {
         return "error";
     }
+
+    @Override
+    public String testTransaction(Integer open) {
+        return null;
+    }
 }

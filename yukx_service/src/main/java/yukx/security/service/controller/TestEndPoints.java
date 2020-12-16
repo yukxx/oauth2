@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import yukx.security.client.feign.UserClient;
 import yukx.security.common.utils.UserUtil;
+import yukx.security.common.utils.excel.ExcelUtils;
+import yukx.security.service.dao.entity.AAccount;
+import yukx.security.service.service.IAAccountService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,6 +37,12 @@ public class TestEndPoints {
     @Autowired
     private TokenStore tokenStore;
 
+    @Autowired(required = false)
+    private ExcelUtils excelUtils;
+
+    @Autowired
+    private IAAccountService accountService;
+
     @GetMapping("/product/{id}")
     public String getProduct(@PathVariable String id, HttpServletRequest req) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -44,6 +53,7 @@ public class TestEndPoints {
 
     @GetMapping("/order/{id}")
     public String getOrder(@PathVariable String id) {
+        log.info("测试excelselect"+excelUtils.testSelect());
         return "(No Auth Request)order id : " + id;
     }
 
@@ -59,5 +69,18 @@ public class TestEndPoints {
 
         log.info("--------登陆信息：{}", UserUtil.getUserInfo().toString());
         return userClient.getUserInfo(name);
+    }
+
+    @ApiOperation("测试事务")
+    @PostMapping("/testTransaction.do")
+    public String testTransaction(Integer open){
+        return accountService.testTransaction(open);
+    }
+
+
+    @ApiOperation("测试事务2")
+    @PostMapping("/testTransaction2.do")
+    public String testTransaction2(Integer open){
+        return accountService.testTransaction2(open);
     }
 }

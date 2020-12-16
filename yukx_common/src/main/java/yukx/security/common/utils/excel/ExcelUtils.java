@@ -267,4 +267,8 @@ public class ExcelUtils {
         style.setFont(font);
         return style;
     }
+
+    public String testSelect(){
+        return "testSelect";
+    }
 }
