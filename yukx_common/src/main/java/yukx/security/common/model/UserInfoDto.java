@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+import yukx.security.common.utils.excel.ExcelCol;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -24,16 +25,19 @@ public class UserInfoDto implements Serializable {
     /**
      * 名称
      */
+    @ExcelCol(order = 0,title="名称")
     private String name;
 
     /**
      * 年龄
      */
+    @ExcelCol(order = 1,title="年龄")
     private Integer age;
 
     /**
      * 性别
      */
+    @ExcelCol(order = 2,title="性别")
     private Integer sex;
 
     /**

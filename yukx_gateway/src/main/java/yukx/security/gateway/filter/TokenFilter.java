@@ -10,7 +10,9 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,6 +30,13 @@ public class TokenFilter implements GlobalFilter {
     @Resource
     private StringRedisTemplate redisTemplate;
 
+
+    public static void main(String[] args) {
+        Map<String, Long> map = new ConcurrentHashMap<>();
+        for (int i = 0; i < 100; i++) {
+            map.put(i + "", System.currentTimeMillis());
+        }
+    }
     /**
      * 添加头部信息，防止请求绕过网关
      * @param exchange

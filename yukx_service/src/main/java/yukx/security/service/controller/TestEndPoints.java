@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import yukx.security.client.feign.UserClient;
+import yukx.security.common.model.UserInfoDto;
 import yukx.security.common.utils.UserUtil;
 import yukx.security.common.utils.excel.ExcelUtils;
-import yukx.security.service.dao.entity.AAccount;
 import yukx.security.service.service.IAAccountService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ClassName TestEndPoints
@@ -53,7 +55,7 @@ public class TestEndPoints {
 
     @GetMapping("/order/{id}")
     public String getOrder(@PathVariable String id) {
-        log.info("测试excelselect"+excelUtils.testSelect());
+        log.info("测试excelselect" + excelUtils.testSelect());
         return "(No Auth Request)order id : " + id;
     }
 
@@ -73,14 +75,30 @@ public class TestEndPoints {
 
     @ApiOperation("测试事务")
     @PostMapping("/testTransaction.do")
-    public String testTransaction(Integer open){
+    public String testTransaction(Integer open) {
         return accountService.testTransaction(open);
     }
 
 
     @ApiOperation("测试事务2")
     @PostMapping("/testTransaction2.do")
-    public String testTransaction2(Integer open){
+    public String testTransaction2(Integer open) {
         return accountService.testTransaction2(open);
+    }
+
+    @ApiOperation("测试导出")
+    @PostMapping("/testExport.do")
+    public void testExport() {
+        List<UserInfoDto> list = new ArrayList<>();
+        UserInfoDto dto = new UserInfoDto();
+        dto.setName("yukx");
+        dto.setAge(26);
+        dto.setSex(1);
+        list.add(dto);
+        try {
+            ExcelUtils.exportExcel("user", list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

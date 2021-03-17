@@ -3,6 +3,8 @@ package yukx.security.common.utils.excel;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import yukx.security.common.utils.string.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -131,6 +133,13 @@ public class ExcelUtils {
     private static void exportExcelV07(OutputStream out, List<?> list, List<ExcelHeader> headerList) throws Exception {
         Workbook wbk = doExportExcel(list, headerList);
         wbk.write(out);
+    }
+
+
+    public static void exportExcel(String filename, List<?> list) throws Exception {
+        HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
+        HttpServletResponse response = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getResponse();
+        exportExcel(filename, list, request, response);
     }
 
     /**

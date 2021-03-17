@@ -53,7 +53,7 @@ public class ResourceConfiguration extends ResourceServerConfigurerAdapter {
 
     // 自定义的token存储器，存到redis中
     @Bean
-    public TokenStore tokenStore() {
+    public TokenStore  tokenStore() {
         return new RedisTokenStore(redisConnectionFactory);
     }
 
