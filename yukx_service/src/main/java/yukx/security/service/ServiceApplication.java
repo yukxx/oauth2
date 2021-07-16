@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Import;
 import yukx.security.client.config.TokenFeignClientInterceptor;
 import yukx.security.common.autoconfig.EnableExcelUtil;
 import yukx.security.common.exceptionHandler.MyExceptionHandler;
+import yukx.security.common.myAop.annotation.EnableAspectAutoProxy;
 
 /**
  * @ClassName ServiceApplication
@@ -21,6 +22,7 @@ import yukx.security.common.exceptionHandler.MyExceptionHandler;
 @Import({TokenFeignClientInterceptor.class, MyExceptionHandler.class})
 @EnableFeignClients(basePackages = "yukx.security.client.feign")
 @EnableExcelUtil
+@EnableAspectAutoProxy
 public class ServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(ServiceApplication.class, args);

@@ -16,7 +16,7 @@ services:
   yukx-config:
     container_name: yukx-config
     image: "yukx-config:1.0"
-    networks:       # 接入网路
+    networks:       # 接入网路1
       - app-network
     depends_on:
       - yukx-eureka
