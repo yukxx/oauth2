@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import yukx.security.client.feign.UserClient;
 import yukx.security.common.model.UserInfoDto;
+import yukx.security.common.myAop.annotation.Before;
 import yukx.security.common.utils.UserUtil;
 import yukx.security.common.utils.excel.ExcelUtils;
 import yukx.security.service.service.IAAccountService;
@@ -22,6 +23,7 @@ import yukx.security.service.service.IAAccountService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @ClassName TestEndPoints
@@ -59,6 +61,7 @@ public class TestEndPoints {
         return "(No Auth Request)order id : " + id;
     }
 
+    @Before
     @ApiOperation("查询用户信息")
     @PostMapping("/getUserInfo.do")
     public String getUserInfo(String name, HttpServletRequest request) {
