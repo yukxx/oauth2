@@ -17,6 +17,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 public class ConfigApplication {
 
     public static void main(String[] args) {
+        System.out.println("hello");
         SpringApplication.run(ConfigApplication.class, args);
     }
 }
